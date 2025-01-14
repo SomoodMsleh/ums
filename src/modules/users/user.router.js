@@ -5,10 +5,23 @@ import jwt from "jsonwebtoken";
 const router = Router();
 
 router.get('/', async(req,res)=>{
-    const users = await userModel.findAll();
+    const users = await userModel.findAll({
+        attributes:['userName','email']
+    });
     return res.status(200).json({massage:"successfully", users});
 });
 
+router.delete('/:id',async (req,res)=>{
+    const {id} = req.params;
+    const user = await userModel.findByPk(id);
+    if(user == null){
+        return res.status(404).json({massage:"user not found"});
+    }
+    await userModel.destroy({
+        where:{id:id}
+    });
+    return res.status(200).json({massage:"successfully"});
+});
 
 router.post('/',async (req,res)=>{
     const {userName,email,password} = req.body;
