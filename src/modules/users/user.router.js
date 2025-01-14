@@ -1,7 +1,7 @@
 import { Router } from "express";
 import bcryptjs from 'bcryptjs'
 import userModel from "../../../DB/model/user.model.js";
-import { where } from "sequelize";
+import jwt from "jsonwebtoken";
 const router = Router();
 
 router.get('/', async(req,res)=>{
@@ -29,7 +29,8 @@ router.post('/login',async (req,res)=>{
     if(check == false){
         return res.status(400).json({massage:"invalid password"});
     }
-    return res.status(200).json({massage:"successfully" ,user});
+    const token = jwt.sign({id:user.id,name:user.userName,email:user.email}, 'somoodedwan');
+    return res.status(200).json({massage:"successfully" ,token});
 });
 
 export default router;
