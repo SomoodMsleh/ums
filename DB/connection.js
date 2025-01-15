@@ -6,7 +6,7 @@ export const sequelize = new Sequelize('ums', 'root', '', {
 });
 
 export const connectDB = ()=>{
-    sequelize.sync().then(()=>{
+    sequelize.sync(/*{force:true}**/).then(()=>{
         console.log(" database connection successfully")
     }).catch((error)=>{
         console.log("error to connect to the database: "  + error);
