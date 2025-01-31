@@ -15,7 +15,6 @@ router.get('/',authentication(),async(req,res)=>{
     }catch(error){
         return res.status(500).json({massage:"server error",error})
     }
-
 });
 
 router.delete('/:id',authentication(),async (req,res)=>{
