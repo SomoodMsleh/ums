@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-
 const authentication = ()=> {
     return (req,res,next)=>{
         try{

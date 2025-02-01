@@ -2,18 +2,13 @@ import userModel from "../../../DB/model/user.model.js";
 import cloudinary from "../../utils/cloudinary.js"
 
 export const getUser = async(req,res)=>{
-    try{
         const users = await userModel.findAll({
             attributes:['userName','email']
         });
         return res.status(200).json({massage:"successfully", users});
-    }catch(error){
-        return res.status(500).json({massage:"server error",error})
-    }
 };
 
 export const deleteUser = async (req,res)=>{
-    try{
         const {id} = req.params;
         const user = await userModel.findByPk(id);
         if(user == null){
@@ -23,14 +18,10 @@ export const deleteUser = async (req,res)=>{
             where:{id:id}
         });
         return res.status(200).json({massage:"successfully"});
-    }catch(error){
-        return res.status(500).json({massage:"server error",error})
-    }
     
 };
 
 export const uploadProfilePicture = async (req,res)=>{
-    try{
         const {id} = req.params;
         const user = await userModel.findByPk(id);
         if(user == null){
@@ -43,8 +34,4 @@ export const uploadProfilePicture = async (req,res)=>{
         user.profilePicture = secure_url;
         await user.save();
         return res.status(200).json({massage:"successfully"});
-
-    }catch(error){
-        return res.status(500).json({massage:"server error",error})
-    }
 };
