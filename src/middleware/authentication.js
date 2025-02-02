@@ -1,16 +1,17 @@
 import jwt from "jsonwebtoken";
+import { AppError } from "../utils/appError.js";
 const authentication = ()=> {
     return (req,res,next)=>{
         try{
             const {token} = req.headers;
             const decoded = jwt.verify(token,'somoodedwan');
             if(decoded.role != 'Admin'){
-                return res.status(400).json({massage:"not Authorized"});
+                return next(new AppError("not Authorized",400));
             }
             req.id = decoded.id;
             next();
         }catch(error){
-            return res.status(500).json({massage:"server error",error})
+            return next(new AppError(`Server error: ${error.message}`, 500));
         }
         
     };

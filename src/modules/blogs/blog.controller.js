@@ -10,11 +10,11 @@ export const getBlog = async(req,res)=>{
             attributes:["userName"]
         }
     });
-    return res.status(200).json({massage:"successfully", blogs});
+    return res.status(200).json({message:"successfully", blogs});
 }
 
 export const createBlog = async(req,res)=>{
     const {title,description} = req.body;
     const blog = await blogModel.create({title,description,UserId:req.id});
-    return res.status(201).json({massage:"successfully",blog});
+    return res.status(201).json({message:"successfully",blog});
 }
